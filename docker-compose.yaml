@@ -1,0 +1,65 @@
+version: '3'
+services:
+  nodered:
+    container_name: ming-object-counter-graph-nodered
+    image: nodered/node-red:latest
+    restart: always
+    environment:
+      - TZ=Europe/Stockholm
+    ports:
+      - '8060:1880'
+    links:
+      - influxdb
+      - mqtt
+    volumes:
+      - ./:/data
+  mqtt:
+    container_name: ming-object-counter-graph-mosquitto
+    restart: always
+    image: eclipse-mosquitto
+    user: '0'
+    ports:
+      - '1860:1883'
+    volumes:
+      - ./mosquitto/config/:/mosquitto/config/:ro
+      - ./mosquitto/log/:/mosquitto/log/
+      - mqttdata:/mosquitto/data/
+  influxdb:
+    container_name: axis-ming-path-influx
+    restart: always
+    image: influxdb:1.8.10
+    user: '0'
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+# Remove # to expose influx db outisde  
+#    ports:
+#      - '8686:8086'  
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ming-object-counter-graph-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - influxdb
+    environment:
+      - TZ=Europe/Stockholm
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_DATE_FORMATS_FULL_DAT=YYYY-MM-DD HH:mm:ss
+      - GF_DATE_FORMATS_INTERVAL_SECOND=HH:mm:ss
+      - GF_DATE_FORMATS_INTERVAL_MINUTE=HH:mm
+      - GF_DATE_FORMATS_INTERVAL_HOUR=ddd HH:mm
+      - GF_DATE_FORMATS_INTERVAL_DAY=MMM DD
+      - GF_DATE_FORMATS_INTERVAL_MONTH=YYYY-MM
+      - GF_DATE_FORMATS_INTERVAL_YEAR=YYYY
+      - GF_SECURITY_COOKIE_SECURE=true
+      - GF_SECURITY_COOKIE_SAMESITE=none
+    user: "0"
+    volumes:
+      - ./grafana:/var/lib/grafana
+
+volumes:
+  mqttdata: ~

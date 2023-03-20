@@ -1,0 +1,11 @@
+{
+    "name": "ming-object-counter-graph",
+    "description": "A demonstration application for graphing ObjecTounter data in an Axis Camera",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "node-red-contrib-influxdb": "~0.6.1",
+        "node-red-dashboard": "~3.3.1",
+        "node-red-node-ui-table": "~0.4.3"
+    }
+}
