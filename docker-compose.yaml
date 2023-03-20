@@ -25,7 +25,7 @@ services:
       - ./mosquitto/log/:/mosquitto/log/
       - mqttdata:/mosquitto/data/
   influxdb:
-    container_name: axis-ming-path-influx
+    container_name: ming-object-counter-graph-infuxdb
     restart: always
     image: influxdb:1.8.10
     user: '0'

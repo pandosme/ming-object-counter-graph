@@ -6,6 +6,7 @@ grafana/
 projects/
 context/
 flows_cred.json
+flows_cred.json
 package-lock.json
 .settings.js
 .config.nodes.json
