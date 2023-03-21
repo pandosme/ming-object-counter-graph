@@ -2,7 +2,15 @@
     {
         "id": "cd788061f5438175",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Data Input",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3f9d77a2487cf5bd",
+        "type": "tab",
+        "label": "Influx Setup",
         "disabled": false,
         "info": "",
         "env": []
@@ -12,7 +20,7 @@
         "type": "mqtt-broker",
         "name": "",
         "broker": "mqtt",
-        "port": "1860",
+        "port": "1883",
         "clientid": "",
         "autoConnect": true,
         "usetls": false,
@@ -35,11 +43,25 @@
         "sessionExpiry": ""
     },
     {
-        "id": "64501fca3b3c616e",
+        "id": "5e6a8d7c8dc77a6b",
+        "type": "influxdb",
+        "hostname": "influxdb",
+        "port": "8086",
+        "protocol": "http",
+        "database": "log",
+        "name": "local ",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "1d47935a0d84b063",
         "type": "mqtt in",
         "z": "cd788061f5438175",
         "name": "",
-        "topic": "#",
+        "topic": "simqtt/acap/ObjectCounter/right",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "8a7ed6a34efca5ee",
@@ -47,10 +69,415 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 190,
-        "y": 80,
+        "x": 270,
+        "y": 140,
         "wires": [
-            []
+            [
+                "152cb9895801b54a",
+                "f63883aa74797b1a"
+            ]
+        ]
+    },
+    {
+        "id": "adede8b0fb7c972b",
+        "type": "mqtt in",
+        "z": "cd788061f5438175",
+        "name": "",
+        "topic": "simqtt/acap/ObjectCounter/left",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8a7ed6a34efca5ee",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 180,
+        "wires": [
+            [
+                "8b97e3f2455f91d5",
+                "f63883aa74797b1a"
+            ]
+        ]
+    },
+    {
+        "id": "152cb9895801b54a",
+        "type": "function",
+        "z": "cd788061f5438175",
+        "name": "Insert",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.value,\n        human: msg.payload.human,\n        car: msg.payload.car,\n        truck: msg.payload.truck,\n        bus: msg.payload.bus,\n        motorcycle: msg.payload.motorcycle,\n        vehicle: msg.payload.vehicle,\n        other: msg.payload.other\n    },\n    {\n        direction: \"Right\",\n        counter: \"ObjectCounter\",\n        device: msg.payload.device\n    }\n]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 140,
+        "wires": [
+            [
+                "cf6fde8560cfd3dd"
+            ]
+        ]
+    },
+    {
+        "id": "8b97e3f2455f91d5",
+        "type": "function",
+        "z": "cd788061f5438175",
+        "name": "Insert",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.value,\n        human: msg.payload.human,\n        car: msg.payload.car,\n        truck: msg.payload.truck,\n        bus: msg.payload.bus,\n        motorcycle: msg.payload.motorcycle,\n        vehicle: msg.payload.vehicle,\n        other: msg.payload.other\n    },\n    {\n        direction: \"Left\",\n        counter: \"ObjectCounter\",\n        device: msg.payload.device\n    }\n]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 180,
+        "wires": [
+            [
+                "cf6fde8560cfd3dd"
+            ]
+        ]
+    },
+    {
+        "id": "132540532bd3f9d4",
+        "type": "mqtt in",
+        "z": "cd788061f5438175",
+        "name": "",
+        "topic": "simqtt/acap/directioncounter/right",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8a7ed6a34efca5ee",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [
+                "442ab2c55976694e",
+                "ba1955f1cd2dea7e"
+            ]
+        ]
+    },
+    {
+        "id": "cf71bb14c6cda2ed",
+        "type": "mqtt in",
+        "z": "cd788061f5438175",
+        "name": "",
+        "topic": "simqtt/acap/directioncounter/left",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8a7ed6a34efca5ee",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 460,
+        "wires": [
+            [
+                "efec05542847e46b",
+                "ba1955f1cd2dea7e"
+            ]
+        ]
+    },
+    {
+        "id": "442ab2c55976694e",
+        "type": "function",
+        "z": "cd788061f5438175",
+        "name": "Insert",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.value\n    },\n    {\n        direction: \"Right\",\n        counter: \"MotionCounter\",\n        device: msg.payload.device\n    }\n]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 420,
+        "wires": [
+            [
+                "cf6fde8560cfd3dd"
+            ]
+        ]
+    },
+    {
+        "id": "efec05542847e46b",
+        "type": "function",
+        "z": "cd788061f5438175",
+        "name": "Insert",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.value\n    },\n    {\n        direction: \"Left\",\n        counter: \"MotionCounter\",\n        device: msg.payloa.device\n    }\n]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 460,
+        "wires": [
+            [
+                "cf6fde8560cfd3dd"
+            ]
+        ]
+    },
+    {
+        "id": "475985a2870b2227",
+        "type": "mqtt in",
+        "z": "cd788061f5438175",
+        "name": "simqtt/acap/ObjectAnalytics/Device1Scenario2",
+        "topic": "simqtt/acap/ObjectAnalytics/Device1Scenario2",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8a7ed6a34efca5ee",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "1916bd5344fc5888",
+                "1524debe4ac78ee1"
+            ]
+        ]
+    },
+    {
+        "id": "0396924617662bc7",
+        "type": "mqtt in",
+        "z": "cd788061f5438175",
+        "name": "simqtt/acap/ObjectAnalytics/Device1Scenario3",
+        "topic": "simqtt/acap/ObjectAnalytics/Device1Scenario3",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8a7ed6a34efca5ee",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 320,
+        "wires": [
+            [
+                "bd1d515661848251",
+                "1524debe4ac78ee1"
+            ]
+        ]
+    },
+    {
+        "id": "1916bd5344fc5888",
+        "type": "function",
+        "z": "cd788061f5438175",
+        "name": "Insert",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.total,\n        human: msg.payload.totalHuman,\n        car: msg.payload.totalCar,\n        truck: msg.payload.totalTruck,\n        bus: msg.payload.totalBus,\n        motorcycle: msg.payload[\"totalMotorcycle/bicycle\"],\n        vehicle: 0,\n        other: msg.payload.totalUnknown\n    },\n    {\n        direction: \"Right\",\n        counter: \"AOA\",\n        device: msg.payload.device\n    }\n]\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 280,
+        "wires": [
+            [
+                "cf6fde8560cfd3dd"
+            ]
+        ]
+    },
+    {
+        "id": "bd1d515661848251",
+        "type": "function",
+        "z": "cd788061f5438175",
+        "name": "Insert",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.total,\n        human: msg.payload.totalHuman,\n        car: msg.payload.totalCar,\n        truck: msg.payload.totalTruck,\n        bus: msg.payload.totalBus,\n        motorcycle: msg.payload[\"totalMotorcycle/bicycle\"],\n        vehicle: 0,\n        other: msg.payload.totalUnknown\n    },\n    {\n        direction: \"Left\",\n        counter: \"AOA\"\n    }\n]\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 320,
+        "wires": [
+            [
+                "cf6fde8560cfd3dd"
+            ]
+        ]
+    },
+    {
+        "id": "cf6fde8560cfd3dd",
+        "type": "influxdb out",
+        "z": "cd788061f5438175",
+        "influxdb": "5e6a8d7c8dc77a6b",
+        "name": "",
+        "measurement": "counters",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 980,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f63883aa74797b1a",
+        "type": "debug",
+        "z": "cd788061f5438175",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1524debe4ac78ee1",
+        "type": "debug",
+        "z": "cd788061f5438175",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ba1955f1cd2dea7e",
+        "type": "debug",
+        "z": "cd788061f5438175",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cab8620b.24de68",
+        "type": "inject",
+        "z": "3f9d77a2487cf5bd",
+        "name": "Initialize",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 100,
+        "wires": [
+            [
+                "13d90300.86ed45"
+            ]
+        ]
+    },
+    {
+        "id": "13d90300.86ed45",
+        "type": "influxdb in",
+        "z": "3f9d77a2487cf5bd",
+        "influxdb": "5e6a8d7c8dc77a6b",
+        "name": "CREATE DATABASE log",
+        "query": "CREATE DATABASE log",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "",
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "c522b231d0993774"
+            ]
+        ]
+    },
+    {
+        "id": "c522b231d0993774",
+        "type": "debug",
+        "z": "3f9d77a2487cf5bd",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5693cab4a242e306",
+        "type": "inject",
+        "z": "3f9d77a2487cf5bd",
+        "name": "Reset",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 160,
+        "wires": [
+            [
+                "5fc639583a2e5d7b"
+            ]
+        ]
+    },
+    {
+        "id": "5fc639583a2e5d7b",
+        "type": "influxdb in",
+        "z": "3f9d77a2487cf5bd",
+        "influxdb": "5e6a8d7c8dc77a6b",
+        "name": "DROP MEASUREMENT counters",
+        "query": "DROP MEASUREMENT counters",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "",
+        "x": 600,
+        "y": 160,
+        "wires": [
+            [
+                "c522b231d0993774"
+            ]
         ]
     }
 ]
