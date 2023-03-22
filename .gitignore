@@ -3,7 +3,7 @@ mosquitto/
 mongodb/
 influxdb/
 grafana/
-.settings.js
+settings.js
 flows_cred.json
 package-lock.json
 .config.runtime.json

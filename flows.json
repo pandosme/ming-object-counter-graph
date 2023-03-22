@@ -69,7 +69,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 270,
+        "x": 250,
         "y": 140,
         "wires": [
             [
@@ -91,7 +91,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 260,
+        "x": 250,
         "y": 180,
         "wires": [
             [
@@ -151,8 +151,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 270,
-        "y": 420,
+        "x": 250,
+        "y": 480,
         "wires": [
             [
                 "442ab2c55976694e",
@@ -173,8 +173,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 270,
-        "y": 460,
+        "x": 250,
+        "y": 520,
         "wires": [
             [
                 "efec05542847e46b",
@@ -194,7 +194,7 @@
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 420,
+        "y": 480,
         "wires": [
             [
                 "cf6fde8560cfd3dd"
@@ -206,14 +206,14 @@
         "type": "function",
         "z": "cd788061f5438175",
         "name": "Insert",
-        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.value\n    },\n    {\n        direction: \"Left\",\n        counter: \"MotionCounter\",\n        device: msg.payloa.device\n    }\n]\n\nreturn msg;",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.value\n    },\n    {\n        direction: \"Left\",\n        counter: \"MotionCounter\",\n        device: msg.payload.device\n    }\n]\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 460,
+        "y": 520,
         "wires": [
             [
                 "cf6fde8560cfd3dd"
@@ -233,8 +233,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 310,
-        "y": 280,
+        "x": 300,
+        "y": 300,
         "wires": [
             [
                 "1916bd5344fc5888",
@@ -255,8 +255,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 310,
-        "y": 320,
+        "x": 300,
+        "y": 340,
         "wires": [
             [
                 "bd1d515661848251",
@@ -276,7 +276,7 @@
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "cf6fde8560cfd3dd"
@@ -288,14 +288,14 @@
         "type": "function",
         "z": "cd788061f5438175",
         "name": "Insert",
-        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.total,\n        human: msg.payload.totalHuman,\n        car: msg.payload.totalCar,\n        truck: msg.payload.totalTruck,\n        bus: msg.payload.totalBus,\n        motorcycle: msg.payload[\"totalMotorcycle/bicycle\"],\n        vehicle: 0,\n        other: msg.payload.totalUnknown\n    },\n    {\n        direction: \"Left\",\n        counter: \"AOA\"\n    }\n]\n\nreturn msg;\n\n",
+        "func": "msg.payload = [\n    {\n        time: msg.payload.timestamp,\n        value: msg.payload.total,\n        human: msg.payload.totalHuman,\n        car: msg.payload.totalCar,\n        truck: msg.payload.totalTruck,\n        bus: msg.payload.totalBus,\n        motorcycle: msg.payload[\"totalMotorcycle/bicycle\"],\n        vehicle: 0,\n        other: msg.payload.totalUnknown\n    },\n    {\n        direction: \"Left\",\n        counter: \"AOA\",\n        device: msg.payload.device\n    }\n]\n\nreturn msg;\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 630,
-        "y": 320,
+        "y": 340,
         "wires": [
             [
                 "cf6fde8560cfd3dd"
@@ -309,8 +309,8 @@
         "influxdb": "5e6a8d7c8dc77a6b",
         "name": "",
         "measurement": "counters",
-        "precision": "",
-        "retentionPolicy": "",
+        "precision": "ms",
+        "retentionPolicy": "week",
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
@@ -341,7 +341,7 @@
         "type": "debug",
         "z": "cd788061f5438175",
         "name": "debug 2",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -349,7 +349,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 620,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
@@ -365,7 +365,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 620,
-        "y": 380,
+        "y": 440,
         "wires": []
     },
     {
@@ -412,7 +412,7 @@
         "y": 100,
         "wires": [
             [
-                "c522b231d0993774"
+                "ef0fe81e.e7d328"
             ]
         ]
     },
@@ -428,8 +428,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 100,
+        "x": 900,
+        "y": 160,
         "wires": []
     },
     {
@@ -479,5 +479,104 @@
                 "c522b231d0993774"
             ]
         ]
+    },
+    {
+        "id": "ef0fe81e.e7d328",
+        "type": "influxdb in",
+        "z": "3f9d77a2487cf5bd",
+        "influxdb": "5e6a8d7c8dc77a6b",
+        "name": "Retention policy quarter",
+        "query": "CREATE RETENTION POLICY \"week\" ON \"log\" DURATION 1w REPLICATION 1;",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "",
+        "x": 930,
+        "y": 100,
+        "wires": [
+            [
+                "8804c685bb39c317"
+            ]
+        ]
+    },
+    {
+        "id": "8804c685bb39c317",
+        "type": "debug",
+        "z": "3f9d77a2487cf5bd",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "385cf0cfcb8c0d3e",
+        "type": "inject",
+        "z": "3f9d77a2487cf5bd",
+        "name": "View all",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "b5e492c941bd9804"
+            ]
+        ]
+    },
+    {
+        "id": "b5e492c941bd9804",
+        "type": "influxdb in",
+        "z": "3f9d77a2487cf5bd",
+        "influxdb": "5e6a8d7c8dc77a6b",
+        "name": "",
+        "query": "SELECT * FROM week.counters",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "a4f4d1eab343838b"
+            ]
+        ]
+    },
+    {
+        "id": "a4f4d1eab343838b",
+        "type": "debug",
+        "z": "3f9d77a2487cf5bd",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 220,
+        "wires": []
     }
 ]
