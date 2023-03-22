@@ -27,5 +27,5 @@ docker-compose up -d
 2. Setup the counter in the camera(s)
 3. Setup the camera MQTT client to connect to your Linix machin address on port 1860
 4. Go to http://server-address:8060 to configure the Node-RED flow that injects data into InfluxDB  
-5. Go to http://server-address:3000 to configure the Node-RED flow that injects data into InfluxDB  
+5. Go to http://server-address:3000 to configure the Grafan panels  
 
