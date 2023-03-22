@@ -485,13 +485,13 @@
         "type": "influxdb in",
         "z": "3f9d77a2487cf5bd",
         "influxdb": "5e6a8d7c8dc77a6b",
-        "name": "Retention policy quarter",
+        "name": "Retention policy week",
         "query": "CREATE RETENTION POLICY \"week\" ON \"log\" DURATION 1w REPLICATION 1;",
         "rawOutput": false,
         "precision": "",
         "retentionPolicy": "",
         "org": "",
-        "x": 930,
+        "x": 920,
         "y": 100,
         "wires": [
             [
